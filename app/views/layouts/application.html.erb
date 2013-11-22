@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="MyHub">
 	<head>
 	  <title>MyHub</title>
 	  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
@@ -7,6 +7,7 @@
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>
+		<% if user_signed_in? %>
 	    <nav class="navbar navbar-fixed-bottom " role="navigation">
 	      <div class="container">
 	        <div class="navbar-header">
@@ -16,16 +17,13 @@
 	            <span class="icon-bar"></span>
 	            <span class="icon-bar"></span>
 	          </button>
-	          <a class="navbar-brand" href="/">
-		          <span class="glyphicon-class"></span>
-		          MyHub
-	          </a>
+	          <br>
 	        </div>
 
 	        <!-- Collect the nav links, forms, and other content for toggling -->
 	        <div class="collapse navbar-collapse navbar-ex1-collapse">
 	          <ul class="nav navbar-nav">
-	            <li><%= link_to "Projects", projects_path, :class => 'navbar-link'  %></li>
+	            <li><a href="#projects">Projects</a></li>
 	            <li><a href="#services">Services</a></li>
 	            <li><a href="#contact">Contact</a></li>
 	            <% if user_signed_in? %>
@@ -39,21 +37,30 @@
 	        </div><!-- /.navbar-collapse -->
 	      </div><!-- /.container -->
 	    </nav>
+	    <% end %>
 	    <div class="container">
 	    	<a href="/"><h1>My Hub</h1></a>
 	    	<% if user_signed_in? %>
-				<p>Logged in as <strong><%= current_user.email %></strong>.</p>
+				<p>Logged in as <strong><%= current_user.name %></strong>.</p>
+			<% else %>
+				<p>
+					<%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> | 
+					<%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+				</p>
 			<% end %>
 	    	<% if @projects %>
 	    		<h4 class="pull-right">You Have <%= @projects.length %> Project(s)</h4>
 			<% end %>	    	
 	    </div>
 	    <div class="container">
-	    	<p class="notice"><%= notice %></p>
-		    <p class="alert"><%= alert %></p>
-	      	
-	        <div ><%= yield %>
-	      	</div>
+		    <% if notice %>
+		    	<p class="notice alert alert-success"><%= notice %></p>
+			<% end %>
+			<% if alert %>
+				<p class="alert alert-danger"><%= alert %></p>
+			<% end %>
+	    	<div ><%= yield %></div>
 	    </div>
+
 	</body>
 </html>

@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
   belongs_to :user
-  validates_presence_of :title, :pitch, :user
+  has_many :tasks
+  validates_presence_of :title, :pitch
 end

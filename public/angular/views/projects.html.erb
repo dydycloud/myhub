@@ -1,0 +1,67 @@
+<style>
+	.animate-show {
+	  -webkit-transition:all linear 0.5s;
+	  transition:all linear 0.5s;
+	  line-height:20px;
+	  opacity:1;
+	  padding:5px;
+	  margin-left: -55px;
+	  border:1px solid black;
+	}
+	 
+	.animate-show.ng-hide-add,
+	.animate-show.ng-hide-remove {
+	  display:block!important;
+	}
+	 
+	.animate-show.ng-hide {
+	  line-height:0;
+	  opacity:0;
+	  padding:0 5px;
+	}
+	ul{
+		list-style-type: none; 
+	}
+</style>
+
+<div ng-controller="projectsCtrl">
+	<div class="col-xs-5 col-sm-4">
+		<h2>Projects List</h2>
+		<!-- Button trigger modal -->
+		<p>
+		<button  ng-click="addClient = true" class="btn btn-primary">Add Project</button>
+		<button  ng-click="ShowProject = true" class="btn btn-primary">Hide Project</button>
+			<button  ng-click="ShowProject = false" class="btn btn-primary">show Project</button>
+		</p>
+		
+		
+		<div class="check-element animate-hide" ng-show="addClient" >
+			<form ng-submit="addTache()">
+					<label for="tilte">Title</label><br>
+					<input type="text" ng-model="newProject.title"><br>
+					<label for="pitch">Pitch</label><br>
+					<textarea ng-model="newProject.pitch"></textarea><br><br>
+					<input type="submit" value="Create" class="btn btn-primary">
+					<button ng-click="addClient = false" class="btn btn-primary">Hide</button>
+			</form>
+		</div>
+		<hr>
+		<p>
+			
+		</p>
+		<ul>
+			<li ng-repeat="p in projects"  class="check-element animate-show" ng-hide="ShowProject">
+				<a  ng-href="#projects/{{p.id}}">{{p.title}} </a>
+				<span class="glyphicon glyphicon-ok pull-right" id="tools"></span> 
+				<span class="glyphicon glyphicon-trash pull-right pull-right" id="tools"></span>
+				<span class="glyphicon glyphicon-pencil pull-right" id="tools"></span>
+			</li>
+		</ul>
+	</div>
+	<div class="col-xs-9 col-sm-3 col-md-5">
+		<div ng-controller="projectCtrl">
+			<h3>{{project.title}}</h3>
+			<p>{{project.title}}</p>
+		</div>	
+	</div>
+</div>
